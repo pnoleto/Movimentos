@@ -1,0 +1,100 @@
+<div class="container">
+  <h2>Movimentos Manuais</h2>
+  <form [formGroup]="formMovimentoManual" (ngSubmit)="Submit()">
+    <div class="form-row form-group">
+      <div class="col-md-6">
+        <label for="inputMes">Mês:</label>
+        <input formControlName="mesData" type="number" class="form-control" id="inputMes"
+          aria-describedby="inputMesHelp" placeholder="Informe o mês">
+        <small *ngIf="this.formMovimentoManual.controls.mesData.errors" id="inputMesHelp"
+          class="text-danger">Obrigatorio informar um mês valido.</small>
+      </div>
+      <div class="col-md-6">
+        <label for="inputAno">Ano:</label>
+        <input formControlName="anoData" type="number" class="form-control" id="inputAno"
+          aria-describedby="inputAnoHelp" placeholder="Informe o ano">
+        <small *ngIf="this.formMovimentoManual.controls.anoData.errors" id="inputAnoHelp"
+          class="text-danger">Obrigatorio informar um ano valido.</small>
+      </div>
+    </div>
+    <div class="form-row form-group">
+      <div class="col-md-6">
+        <label for="inputProduto">Produto:</label>
+        <select formControlName="produto" class="form-control" id="inputProduto">
+          <option [value]="null">-- Selecione --</option>
+          <option *ngFor="let item of produtoList" [value]="item.codProduto" [innerHTML]="item.descricaoProduto">
+          </option>
+        </select>
+        <small *ngIf="this.formMovimentoManual.controls.produto.errors" id="inputProdutoHelp"
+          class="text-danger">Obrigatorio selecionar um produto.</small>
+      </div>
+      <div class="col-md-6">
+        <label for="inputProdutoCosif">Cosif:</label>
+        <select formControlName="codigoCosif" class="form-control" id="inputProdutoCosif">
+          <option [value]="null">-- Selecione --</option>
+          <option *ngFor="let item of produtoCosifList" [value]="item.codigoCosif"
+            [innerHTML]="item.codigoClassificacao"></option>
+        </select>
+        <small *ngIf="this.formMovimentoManual.controls.codigoCosif.errors" id="inputcodigoCosifHelp"
+          class="text-danger">Obrigatorio selecionar uma classificação COSIF</small>
+      </div>
+    </div>
+    <div class="form-row form-group">
+      <div class="col-md-6">
+        <label for="inputDescricaoMovimento">Descrição:</label>
+        <textarea formControlName="descricao" class="form-control" id="inputDescricaoMovimento" rows="3"></textarea>
+      </div>
+      <div class="col-md-6">
+        <label for="inputMovimentoValor">Valor:</label>
+        <input formControlName="valor" type="number" class="form-control" id="inputMovimentoValor"
+          aria-describedby="inputMovimentoValorHelp" placeholder="informe o valor">
+        <small *ngIf="this.formMovimentoManual.controls.valor.errors" id="inputMovimentoValorHelp" class="text-danger">
+          Obrigatorio informar um valor do movimento valido.
+        </small>
+      </div>
+    </div>
+    <div class="form-row form-group col-md-6">
+      <div class="col-md-6"></div>
+
+      <div class="form-group col-md-2">
+        <button type="reset" class="btn btn-primary">Limpar</button>
+      </div>
+
+      <div class="col-md-2">
+        <button type="button" (click)="Novo()" class="btn btn-primary">Novo</button>
+      </div>
+
+      <div class="form-group col-md-2">
+        <button type="submit" [disabled]="this.formMovimentoManual.invalid || this.formMovimentoManual.disabled"
+          class="btn btn-primary">Incluir</button>
+      </div>
+
+    </div>
+  </form>
+  <div class="form-group">
+    <table class="table table-hover table-striped table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">Mês</th>
+          <th scope="col">Ano</th>
+          <th scope="col">Código do Produto</th>
+          <th scope="col">Descrição do Produto</th>
+          <th scope="col">NR Lançamento</th>
+          <th scope="col">Descriçâo</th>
+          <th scope="col">Valor</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of movimentosManuaisList">
+          <td>{{ item.mesData }}</td>
+          <td>{{ item.anoData }}</td>
+          <td>{{ item.codigoProduto }}</td>
+          <td>{{ item.produto_Cosif.produto.descricaoProduto }}</td>
+          <td>{{ item.numeroLancamento }}</td>
+          <td>{{ item.descricao }}</td>
+          <td>{{ item.valor | currency:'BRL' }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

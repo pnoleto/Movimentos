@@ -1,0 +1,1 @@
+export * from './movimento-manual/movimento-manual.component';
